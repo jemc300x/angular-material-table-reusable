@@ -9,6 +9,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { CustomersComponent } from './pages/customers/customers.component';
 import { TableCustomersComponent } from './components/table-customers/table-customers.component';
 import { TableProductsComponent } from './components/table-products/table-products.component';
+import { TableModule } from './modules/table/table.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TableProductsComponent } from './components/table-products/table-produc
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
+    TableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

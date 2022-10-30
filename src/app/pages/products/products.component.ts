@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TableColumn } from 'src/app/modules/table/models/table-column';
 
 const PRODUCTS_DATA_MOCK = [
   {
@@ -30,8 +31,24 @@ const PRODUCTS_DATA_MOCK = [
 })
 export class ProductsComponent implements OnInit {
   productsList = PRODUCTS_DATA_MOCK;
+  tableColumns: TableColumn[] = [];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setTableColumns();
+  }
+
+  setTableColumns() {
+    this.tableColumns = [
+      { label: 'Name', def: 'name', dataKey: 'name' },
+      {
+        label: 'Category',
+        def: 'category',
+        dataKey: 'category.name',
+        dataType: 'object',
+      },
+      { label: 'Description', def: 'description', dataKey: 'description' },
+    ];
+  }
 }
