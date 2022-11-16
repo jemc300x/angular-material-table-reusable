@@ -1,4 +1,9 @@
 <h1>Customers</h1>
 <section>
-  <app-table [data]="customersList" [columns]="tableColumns"></app-table>
+  <app-table
+    [data]="customersList"
+    [columns]="tableColumns"
+    [config]="tableConfig"
+    (select)="onSelect($event)"
+  ></app-table>
 </section>

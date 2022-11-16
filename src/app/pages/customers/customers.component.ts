@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TableColumn } from 'src/app/modules/table/models/table-column';
+import { TableConfig } from 'src/app/modules/table/models/table-config';
 
 const CUSTOMERS_DATA_MOCK = [
   {
@@ -36,6 +37,9 @@ const CUSTOMERS_DATA_MOCK = [
 export class CustomersComponent implements OnInit {
   customersList = CUSTOMERS_DATA_MOCK;
   tableColumns: TableColumn[] = [];
+  tableConfig: TableConfig = {
+    isSelectable: true,
+  };
 
   constructor() {}
 
@@ -56,5 +60,9 @@ export class CustomersComponent implements OnInit {
       },
       { label: 'Country', def: 'country', dataKey: 'country' },
     ];
+  }
+
+  onSelect(data: any) {
+    console.log(data);
   }
 }
