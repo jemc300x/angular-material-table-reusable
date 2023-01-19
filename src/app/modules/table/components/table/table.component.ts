@@ -1,5 +1,15 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../../models/table-column';
 import { TableConfig } from '../../models/table-config';
 
@@ -8,15 +18,18 @@ import { TableConfig } from '../../models/table-config';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
-  dataSource: any = [];
+export class TableComponent implements OnInit, AfterViewInit {
+  dataSource: MatTableDataSource<Array<any>> = new MatTableDataSource();
   tableDisplayColumns: string[] = [];
   tableColumns: TableColumn[] = [];
   selection = new SelectionModel<any>(true, []);
   tableConfig: TableConfig | undefined;
 
-  @Input() set data(data: any) {
-    this.dataSource = data;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @Input() set data(data: Array<any>) {
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
   }
 
   @Input() set columns(columns: TableColumn[]) {
@@ -34,6 +47,10 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   onSelect() {
     this.select.emit(this.selection.selected);
   }
@@ -49,7 +66,7 @@ export class TableComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.length;
+    const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
@@ -61,7 +78,7 @@ export class TableComponent implements OnInit {
       return;
     }
 
-    this.selection.select(...this.dataSource);
+    this.selection.select(...this.dataSource.data);
     this.onSelect();
   }
 

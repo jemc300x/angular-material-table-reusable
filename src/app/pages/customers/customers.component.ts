@@ -27,6 +27,30 @@ const CUSTOMERS_DATA_MOCK = [
     birthdate: new Date(2000, 0, 1),
     country: 'Perú',
   },
+  {
+    name: 'Jessica2',
+    lastName: 'Chastain',
+    birthdate: new Date(2000, 0, 1),
+    country: 'Perú',
+  },
+  {
+    name: 'Jessica3',
+    lastName: 'Chastain',
+    birthdate: new Date(2000, 0, 1),
+    country: 'Perú',
+  },
+  {
+    name: 'Jessica4',
+    lastName: 'Chastain',
+    birthdate: new Date(2000, 0, 1),
+    country: 'Perú',
+  },
+  {
+    name: 'Jessica5',
+    lastName: 'Chastain',
+    birthdate: new Date(2000, 0, 1),
+    country: 'Perú',
+  },
 ];
 
 @Component({
@@ -35,16 +59,21 @@ const CUSTOMERS_DATA_MOCK = [
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
-  customersList = CUSTOMERS_DATA_MOCK;
+  customersList: Array<any> = [];
   tableColumns: TableColumn[] = [];
   tableConfig: TableConfig = {
     isSelectable: true,
+    isPaginable: true,
   };
 
   constructor() {}
 
   ngOnInit(): void {
     this.setTableColumns();
+    // Ejemplo para simular asincronismo
+    setTimeout(() => {
+      this.customersList = CUSTOMERS_DATA_MOCK;
+    }, 5000);
   }
 
   setTableColumns() {
