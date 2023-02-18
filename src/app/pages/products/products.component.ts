@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TableColumn } from 'src/app/modules/table/models/table-column';
+import { TableColumn } from 'src/app/modules/table/models/table-column.model';
 
 const PRODUCTS_DATA_MOCK = [
   {

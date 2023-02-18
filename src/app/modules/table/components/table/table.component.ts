@@ -10,8 +10,10 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { TableColumn } from '../../models/table-column';
-import { TableConfig } from '../../models/table-config';
+import { TABLE_ACTION } from '../../enums/table-action.enum';
+import { TableAction } from '../../models/table-action.model';
+import { TableColumn } from '../../models/table-column.model';
+import { TableConfig } from '../../models/table-config.model';
 
 @Component({
   selector: 'app-table',
@@ -42,6 +44,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() action: EventEmitter<TableAction> = new EventEmitter();
 
   constructor() {}
 
@@ -60,6 +63,10 @@ export class TableComponent implements OnInit, AfterViewInit {
 
     if (this.tableConfig.isSelectable) {
       this.tableDisplayColumns.unshift('select');
+    }
+
+    if (this.tableConfig.showActions) {
+      this.tableDisplayColumns.push('actions');
     }
   }
 
@@ -90,5 +97,13 @@ export class TableComponent implements OnInit, AfterViewInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.position + 1
     }`;
+  }
+
+  onEdit(row: any) {
+    this.action.emit({ action: TABLE_ACTION.EDIT, row });
+  }
+
+  onDelete(row: any) {
+    this.action.emit({ action: TABLE_ACTION.DELETE, row });
   }
 }

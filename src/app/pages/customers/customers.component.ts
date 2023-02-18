@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TableColumn } from 'src/app/modules/table/models/table-column';
-import { TableConfig } from 'src/app/modules/table/models/table-config';
+import { Customer } from 'src/app/models/customer.mode';
+import { TABLE_ACTION } from 'src/app/modules/table/enums/table-action.enum';
+import { TableAction } from 'src/app/modules/table/models/table-action.model';
+import { TableColumn } from 'src/app/modules/table/models/table-column.model';
+import { TableConfig } from 'src/app/modules/table/models/table-config.model';
 
 const CUSTOMERS_DATA_MOCK = [
   {
@@ -59,11 +62,12 @@ const CUSTOMERS_DATA_MOCK = [
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
-  customersList: Array<any> = [];
+  customersList: Array<Customer> = [];
   tableColumns: TableColumn[] = [];
   tableConfig: TableConfig = {
     isSelectable: true,
     isPaginable: true,
+    showActions: true,
   };
 
   constructor() {}
@@ -93,5 +97,27 @@ export class CustomersComponent implements OnInit {
 
   onSelect(data: any) {
     console.log(data);
+  }
+
+  onTableAction(tableAction: TableAction) {
+    switch (tableAction.action) {
+      case TABLE_ACTION.EDIT:
+        this.onEdit(tableAction.row);
+        break;
+
+      case TABLE_ACTION.DELETE:
+        this.onDelete(tableAction.row);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  onEdit(customer: Customer) {
+    console.log('Edit', customer);
+  }
+  onDelete(customer: Customer) {
+    console.log('Delete', customer);
   }
 }

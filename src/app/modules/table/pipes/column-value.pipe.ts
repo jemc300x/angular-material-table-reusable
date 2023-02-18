@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { TableColumn } from '../models/table-column';
+import { TableColumn } from '../models/table-column.model';
 
 @Pipe({
   name: 'columnValue',

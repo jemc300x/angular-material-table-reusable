@@ -21,6 +21,15 @@
     </td>
   </ng-container>
 
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row">
+      <button (click)="onEdit(row)">Edit</button>
+      <button (click)="onDelete(row)">Delete</button>
+    </td>
+  </ng-container>
+
   <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.def">
     <th mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
     <td mat-cell *matCellDef="let row">{{ row | columnValue : column }}</td>
