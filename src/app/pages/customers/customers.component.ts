@@ -68,6 +68,7 @@ export class CustomersComponent implements OnInit {
     isSelectable: true,
     isPaginable: true,
     showActions: true,
+    showFilter: true,
   };
 
   constructor() {}
