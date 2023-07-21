@@ -6,7 +6,7 @@ import { TableColumn } from '../models/table-column';
   name: 'columnValue',
 })
 export class ColumnValuePipe implements PipeTransform {
-  transform(row: any, column: TableColumn): unknown {
+  transform(row: any, column: TableColumn): string {
     let displayValue = row[column.dataKey];
 
     switch (column.dataType) {
