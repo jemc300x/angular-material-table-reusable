@@ -14,6 +14,7 @@ import { TABLE_ACTION } from '../../enums/table-action.enum';
 import { TableAction } from '../../models/table-action.model';
 import { TableColumn } from '../../models/table-column.model';
 import { TableConfig } from '../../models/table-config.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -26,6 +27,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   tableColumns: TableColumn[] = [];
   selection = new SelectionModel<any>(true, []);
   tableConfig: TableConfig | undefined;
+  isEditMode = false;
+  currentRowIndex: number | undefined;
+  formGroup: FormGroup = new FormGroup({});
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -42,6 +46,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() set config(config: TableConfig) {
     this.setConfig(config);
   }
+
+  @Input() createNewFormGroup!: (item: any) => FormGroup;
+  @Input() isLoading = false;
 
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() action: EventEmitter<TableAction> = new EventEmitter();
@@ -99,8 +106,26 @@ export class TableComponent implements OnInit, AfterViewInit {
     }`;
   }
 
-  onEdit(row: any) {
+  onEdit(row: any, index: number) {
+    this.isEditMode = true;
+    this.currentRowIndex = index;
+    this.formGroup = this.createNewFormGroup(row);
+
     this.action.emit({ action: TABLE_ACTION.EDIT, row });
+  }
+
+  onCancel() {
+    this.isEditMode = false;
+    this.currentRowIndex = undefined;
+  }
+
+  onSave() {
+    const newRow = this.formGroup.value;
+    console.log('NewRow', newRow);
+
+    this.action.emit({ action: TABLE_ACTION.SAVE, row: newRow });
+    this.isEditMode = false;
+    this.currentRowIndex = undefined;
   }
 
   onDelete(row: any) {
