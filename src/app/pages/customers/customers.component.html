@@ -1,4 +1,41 @@
 <h1>Customers</h1>
 <section>
-  <app-table [data]="customersList" [columns]="tableColumns"></app-table>
+  <app-table
+    [data]="customersList"
+    [columns]="tableColumns"
+    [deteilTemplate]="detail"
+    [isExpandable]="true"
+  ></app-table>
+  <ng-template #detail let-element="row">
+    <div class="example-element-diagram">
+      <div class="example-element-position">{{ element.position }}</div>
+      <div class="example-element-symbol">{{ element.symbol }}</div>
+      <div class="example-element-name">{{ element.name }}</div>
+      <div class="example-element-weight">{{ element.weight }}</div>
+    </div>
+    <div class="example-element-description">
+      {{ element.detail }}
+      <span class="example-element-description-attribution">
+        -- Wikipedia
+      </span>
+    </div>
+  </ng-template>
+</section>
+
+<h1>Customers 2</h1>
+<section>
+  <app-table
+    [data]="customersList"
+    [columns]="tableColumns"
+    [deteilTemplate]="detail2"
+    [isExpandable]="true"
+  ></app-table>
+  <ng-template #detail2 let-element="row">
+    <div class="example-element-description">
+      {{ element.detail }}
+      <span class="example-element-description-attribution">
+        -- Wikipedia
+      </span>
+    </div>
+  </ng-template>
 </section>

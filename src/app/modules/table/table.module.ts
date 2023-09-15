@@ -4,10 +4,18 @@ import { TableComponent } from './components/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { ColumnValuePipe } from './pipes/column-value.pipe';
 import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [TableComponent, ColumnValuePipe],
-  imports: [CommonModule, MatTableModule, MatSortModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatSortModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   exports: [TableComponent],
 })
 export class TableModule {}
