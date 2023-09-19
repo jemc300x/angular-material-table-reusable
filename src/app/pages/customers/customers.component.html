@@ -6,4 +6,10 @@
     [config]="tableConfig"
     (select)="onSelect($event)"
   ></app-table>
+
+  <ng-template #colChip let-item let-col="colName">
+    <mat-chip-list aria-label="Fish selection">
+      <mat-chip *ngFor="let chip of item[col]">{{ chip }}</mat-chip>
+    </mat-chip-list>
+  </ng-template>
 </section>
