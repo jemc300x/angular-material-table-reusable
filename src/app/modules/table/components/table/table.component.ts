@@ -73,7 +73,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   getValue(row: any, columnName: string) {
     const column = this.tableColumns.find(
-      (col) => col.dataKey === columnName
+      (col) => col.def === columnName
     ) as TableColumn;
 
     return this.getColumnValue.transform(row, column);

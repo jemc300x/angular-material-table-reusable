@@ -1,6 +1,11 @@
 <table mat-table #table [dataSource]="dataSource" matSort multiTemplateDataRows>
-  <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.def">
-    <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.dataKey">
+  <ng-container
+    *ngFor="let column of tableColumns"
+    [matColumnDef]="column.def"
+    [sticky]="column.isSticky"
+    [stickyEnd]="column.isStickyEnd"
+  >
+    <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.def">
       {{ column.label }}
     </th>
     <td mat-cell *matCellDef="let row">{{ row | columnValue : column }}</td>
