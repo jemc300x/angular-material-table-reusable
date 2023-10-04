@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { timer } from 'rxjs';
 import { Customer } from 'src/app/models/customer.mode';
@@ -96,7 +96,20 @@ export class CustomersComponent implements OnInit {
     showActions: true,
   };
 
+  countriesAvailableSource: string[] = [
+    'España',
+    'Colombia',
+    'China',
+    'Mexico',
+    'Perú',
+    'Grecia',
+  ];
+
+  currentCountriesAvailable: string[] = [];
   isLoadingTable: boolean = true;
+
+  @ViewChild('templateForEditColumnCountry', { static: true })
+  templateForEditColumnCountry: TemplateRef<any> | undefined;
 
   constructor() {}
 
@@ -126,7 +139,7 @@ export class CustomersComponent implements OnInit {
         def: 'country',
         dataKey: 'country',
         controlType: 'select',
-        data: ['España', 'Colombia', 'China', 'Mexico', 'Perú', 'Grecia'],
+        templateForEdit: this.templateForEditColumnCountry,
       },
       {
         label: 'Active',
@@ -179,7 +192,35 @@ export class CustomersComponent implements OnInit {
 
   onEdit(customer: Customer) {
     console.log('Edit', customer);
+
+    this.currentCountriesAvailable = this.getCountriesAvailable(
+      customer.country
+    );
   }
+
+  private getCountriesAvailable(currentCountry: string) {
+    let countriesAvailable = [...this.countriesAvailableSource];
+
+    const countriesSelected = new Set(this.customersList.map((c) => c.country));
+    console.log('countriesSelected', countriesSelected);
+
+    countriesSelected.forEach((cs) => {
+      console.log(cs);
+
+      countriesAvailable = countriesAvailable.filter((ca) => {
+        if (ca === currentCountry) {
+          return ca;
+        }
+
+        return ca !== cs;
+      });
+    });
+
+    console.log('countriesAvailable', countriesAvailable);
+
+    return countriesAvailable;
+  }
+
   onDelete(customer: Customer) {
     console.log('Delete', customer);
   }

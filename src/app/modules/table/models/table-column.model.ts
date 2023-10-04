@@ -1,3 +1,5 @@
+import { TemplateRef } from '@angular/core';
+
 export interface TableColumn {
   label: string;
   def: string;
@@ -6,4 +8,5 @@ export interface TableColumn {
   dataType?: 'date' | 'object';
   controlType?: 'check' | 'date' | 'radio' | 'select';
   data?: any[];
+  templateForEdit?: TemplateRef<any>;
 }

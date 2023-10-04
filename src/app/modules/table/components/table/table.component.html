@@ -68,46 +68,59 @@
           [formGroup]="formGroup"
           *ngIf="isEditMode && currentRowIndex === i; else notEditMode"
         >
-          <ng-container [ngSwitch]="column.controlType">
-            <ng-container *ngSwitchCase="'check'">
-              <mat-checkbox [formControlName]="column.def"></mat-checkbox>
-            </ng-container>
-            <ng-container *ngSwitchCase="'radio'">
-              <mat-radio-group [formControlName]="column.def">
-                <mat-radio-button
-                  *ngFor="let option of column.data"
-                  [value]="option"
-                  >{{ option }}</mat-radio-button
-                >
-              </mat-radio-group>
-            </ng-container>
-            <ng-container *ngSwitchCase="'date'">
-              <mat-form-field>
-                <input
-                  matInput
-                  [matDatepicker]="picker"
-                  [formControlName]="column.def"
-                />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-            </ng-container>
-            <ng-container *ngSwitchCase="'select'">
-              <mat-select [formControlName]="column.def">
-                <mat-option *ngFor="let option of column.data" [value]="option">
-                  {{ option }}
-                </mat-option>
-              </mat-select>
-            </ng-container>
-            <ng-container *ngSwitchDefault>
-              <mat-form-field>
-                <input matInput [formControlName]="column.def" />
-              </mat-form-field>
-            </ng-container>
+          <ng-container *ngIf="column.templateForEdit; else notTemplate">
+            <ng-container
+              *ngTemplateOutlet="
+                column.templateForEdit;
+                context: { $implicit: column, formGroup }
+              "
+            ></ng-container>
           </ng-container>
+          <ng-template #notTemplate>
+            <ng-container [ngSwitch]="column.controlType">
+              <ng-container *ngSwitchCase="'check'">
+                <mat-checkbox [formControlName]="column.def"></mat-checkbox>
+              </ng-container>
+              <ng-container *ngSwitchCase="'radio'">
+                <mat-radio-group [formControlName]="column.def">
+                  <mat-radio-button
+                    *ngFor="let option of column.data"
+                    [value]="option"
+                    >{{ option }}</mat-radio-button
+                  >
+                </mat-radio-group>
+              </ng-container>
+              <ng-container *ngSwitchCase="'date'">
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [formControlName]="column.def"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </ng-container>
+              <ng-container *ngSwitchCase="'select'">
+                <mat-select [formControlName]="column.def">
+                  <mat-option
+                    *ngFor="let option of column.data"
+                    [value]="option"
+                  >
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <mat-form-field>
+                  <input matInput [formControlName]="column.def" />
+                </mat-form-field>
+              </ng-container>
+            </ng-container>
+          </ng-template>
         </ng-container>
         <ng-template #notEditMode>
           {{ row | columnValue : column }}
