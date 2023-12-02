@@ -10,6 +10,8 @@ import { CustomersComponent } from './pages/customers/customers.component';
 import { TableCustomersComponent } from './components/table-customers/table-customers.component';
 import { TableProductsComponent } from './components/table-products/table-products.component';
 import { TableModule } from './modules/table/table.module';
+import { UsersComponent } from './pages/users/users.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { TableModule } from './modules/table/table.module';
     CustomersComponent,
     TableCustomersComponent,
     TableProductsComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +28,7 @@ import { TableModule } from './modules/table/table.module';
     BrowserAnimationsModule,
     MatTableModule,
     TableModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

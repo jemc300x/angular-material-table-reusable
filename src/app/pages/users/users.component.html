@@ -1,0 +1,14 @@
+<p>users works!</p>
+
+<mat-select placeholder="Placeholder" (valueChange)="onSelectUser($event)">
+  <mat-option *ngFor="let item of items" [value]="item">
+    {{ item.name }}
+  </mat-option>
+</mat-select>
+
+<app-table
+  [data]="permissionsList"
+  [columns]="tableColumns"
+  [config]="{ isSelectable: true }"
+  (select)="onRowsSelect($event)"
+></app-table>

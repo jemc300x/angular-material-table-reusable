@@ -17,6 +17,13 @@ export class TableComponent implements OnInit {
 
   @Input() set data(data: any) {
     this.dataSource = data;
+    console.log(data);
+    if (this.tableConfig?.isSelectable) {
+      this.selection = new SelectionModel(
+        true,
+        data.filter((item: any) => item.isSelected)
+      );
+    }
   }
 
   @Input() set columns(columns: TableColumn[]) {
