@@ -1,4 +1,11 @@
 <h1>Products</h1>
 <section>
-  <app-table [data]="productsList" [columns]="tableColumns"></app-table>
+  <app-table
+    defaultFilterColumn="ALL"
+    [data]="productsList"
+    [columns]="tableColumns"
+    [config]="{ showFilter: true, isSelectable: false }"
+    [columnsToFilter]="columnsToFilter"
+    [customerFilterPredicate]="getCustomFilterPredicate()"
+  ></app-table>
 </section>

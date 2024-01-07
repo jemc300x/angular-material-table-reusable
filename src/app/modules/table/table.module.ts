@@ -6,6 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColumnValuePipe } from './pipes/column-value.pipe';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [TableComponent, ColumnValuePipe],
@@ -15,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCheckboxModule,
     MatPaginatorModule,
     MatInputModule,
+    MatSelectModule,
   ],
   exports: [TableComponent],
 })

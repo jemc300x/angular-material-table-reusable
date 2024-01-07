@@ -15,20 +15,33 @@ import { TableAction } from '../../models/table-action.model';
 import { TableColumn } from '../../models/table-column.model';
 import { TableConfig } from '../../models/table-config.model';
 
+export interface ColumnsToFilter {
+  placeholder: string;
+  column: string;
+  options: string[];
+}
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  dataSource: MatTableDataSource<Array<any>> = new MatTableDataSource();
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
   tableDisplayColumns: string[] = [];
   tableColumns: TableColumn[] = [];
   selection = new SelectionModel<any>(true, []);
   tableConfig: TableConfig | undefined;
   currentFilterValue: string = '';
+  valueToFilter: { [key: string]: string } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @Input() defaultFilterColumn: string = '';
+
+  @Input() customerFilterPredicate?: (data: any, filter: string) => boolean;
+
+  @Input() columnsToFilter: ColumnsToFilter[] = [];
 
   @Input() set data(data: Array<any>) {
     this.dataSource = new MatTableDataSource(data);
@@ -53,6 +66,9 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    if (this.customerFilterPredicate) {
+      this.dataSource.filterPredicate = this.customerFilterPredicate;
+    }
   }
 
   onSelect() {
@@ -108,9 +124,15 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.action.emit({ action: TABLE_ACTION.DELETE, row });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: string, column: string = this.defaultFilterColumn) {
+    let filterValue = value?.trim().toLowerCase();
+
+    if (this.columnsToFilter.length > 0) {
+      this.valueToFilter[column] = filterValue;
+      filterValue = JSON.stringify(this.valueToFilter);
+    }
+
+    this.dataSource.filter = filterValue;
     this.currentFilterValue = filterValue;
   }
 }

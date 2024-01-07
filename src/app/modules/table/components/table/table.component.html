@@ -1,6 +1,25 @@
+<ng-container *ngIf="columnsToFilter.length > 0">
+  <mat-form-field *ngFor="let item of columnsToFilter">
+    <mat-select
+      [placeholder]="item.placeholder"
+      (valueChange)="applyFilter($event, item.column)"
+    >
+      <mat-option></mat-option>
+      <mat-option *ngFor="let option of item.options" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+
 <mat-form-field *ngIf="tableConfig?.showFilter">
   <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+  <input
+    matInput
+    (keyup)="applyFilter(input.value)"
+    placeholder="Ex. ium"
+    #input
+  />
 </mat-form-field>
 
 <table mat-table #table [dataSource]="dataSource">
